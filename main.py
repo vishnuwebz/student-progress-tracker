@@ -4,52 +4,50 @@ def main():
     print("==================================")
     print("Student Progress Tracker (CLI)")
     print("==================================")
-    print("\n[Module 4] Working with student names as strings...\n")
+    print("\n[Module 5] Using lists and tuples for subjects and marks...\n")
 
     # get basic details
     full_name = input("Enter full name (e.g., Vishnu G) : ")
+    age = int(input("Enter age: "))
     course = input("Enter course name (e.g, Python Full Stack) : ")
 
-    # normalize course display
-    course_clean = course.strip()
+    # pack some basic info in a tuple(immutable container)
+    student_basic = (full_name, age, course)
 
-    # string indexing
-    first_char = full_name[0] if len(full_name) > 0 else ""
-    last_char = full_name[-1] if len(full_name) > 0 else ""
+    # --- students and marks using a list ---
+    # predefined subjects lists (can be changed later)
+    subjects = ["Maths", "Physics", "Chemistry"]
+    marks = [] # empty list to store marks
 
-    # string slicing: first name and last name
-    # we try to split on the first space
-    space_index = full_name.find(" ")
+    print("\nEnter marks for each subject (0 to 100):")
+    for subject in subjects:
+        mark = float(input(f"{subject} mark: "))
+        marks.append(mark) # list.append() to add elements at end
 
+    # calculate total and average using the marks list
+    total = sum(marks)
+    average = total / len(marks)
 
-    if space_index != -1:
-        first_name = full_name[:space_index]        # from start to space-1
-        last_name = full_name[space_index + 1:]     # from char after space to end
+    # --- output summary ---
+    print("\n--- Student Summary (lists and tuples)---")
+    print("Student (tuple) :", student_basic)
+    print("Name            :", student_basic[0])
+    print("Age             :", student_basic[1])
+    print("Course          :", student_basic[2])
 
-    else:
-        first_name = full_name
-        last_name = ""
+    print("\nSubjects and Marks:")
+    for index, subject in enumerate(subjects):
+        print(f"{index}. {subject}: {marks[index]}")
 
-    # some string transformation
-    full_upper = full_name.upper()
-    full_lower = full_name.lower()
-
-    # --- Output summary ---
-    print("\n--- String Details ---")
-    print("Full Name          :", full_name)
-    print("First character    :", first_char)
-    print("Last character     :", last_char)
-    print("First name (slice) :", first_name)
-    print("Last name (slice)  :", last_name)
-    print("Full upper case    :", full_upper)
-    print("Full lower case    :", full_lower)
-    print("Course (clean)     :", course_clean)
+    print("\nTotal marks :", total)
+    print("Average : ", average)
 
 
     print("\n[Info] In this module we used:")
-    print("- String indexing: name[0], name[-1].")
-    print("- String slicing: name[:space_index], name[space_index+1:].")
-    print("- String methods: .upper(), .lower(), .strip().")
+    print("- List for multiple marks and subjects.")
+    print("- .append() to add marks to the list.")
+    print("- Tuple to store basic, fixed student info.")
+    print("- Indexing and enumerate() to access list items.")
 
 if __name__ == "__main__":
     main()
