@@ -4,43 +4,52 @@ def main():
     print("==================================")
     print("Student Progress Tracker (CLI)")
     print("==================================")
-    print("\n[Module 3] Collecting basic details and marks for one student...\n")
+    print("\n[Module 4] Working with student names as strings...\n")
 
-    # getting input from the user (*all inputs first come as strings)
-    student_name = input("Enter student name: ")
-    age_input = input("Enter student age: ")
-    course = input("Enter course name: ")
+    # get basic details
+    full_name = input("Enter full name (e.g., Vishnu G) : ")
+    course = input("Enter course name (e.g, Python Full Stack) : ")
 
-    # type conversion (string -> int) with a simple assumption it is valid
-    age = int(age_input)
+    # normalize course display
+    course_clean = course.strip()
 
-    print("\nEnter marks for 3 subjects (0 to 100):")
-    mark1 = float(input("Mark 1: "))
-    mark2 = float(input("Mark 2: "))
-    mark3 = float(input("Mark 3: "))
+    # string indexing
+    first_char = full_name[0] if len(full_name) > 0 else ""
+    last_char = full_name[-1] if len(full_name) > 0 else ""
+
+    # string slicing: first name and last name
+    # we try to split on the first space
+    space_index = full_name.find(" ")
 
 
-    # arithmetic operations
-    total = mark1 + mark2 + mark3        # + addition
-    average = total / 3                  # / normal division gives float
-    average_floor = total // 3           # // floor division drops decimal part
-    remainder = total % 3                # % remainder
+    if space_index != -1:
+        first_name = full_name[:space_index]        # from start to space-1
+        last_name = full_name[space_index + 1:]     # from char after space to end
+
+    else:
+        first_name = full_name
+        last_name = ""
+
+    # some string transformation
+    full_upper = full_name.upper()
+    full_lower = full_name.lower()
 
     # --- Output summary ---
-    print("\n--- Student Summary ---")
-    print("Name   :", student_name)
-    print("Age    :", age)
-    print("Course :", course)
-    print("Marks  :", mark1, mark2, mark3)
-    print("Total  :", total)
-    print("Average (float)      :", average)
-    print("Average (floor // 3) :", average_floor)
-    print("Remainder (total % 3):", remainder)
+    print("\n--- String Details ---")
+    print("Full Name          :", full_name)
+    print("First character    :", first_char)
+    print("Last character     :", last_char)
+    print("First name (slice) :", first_name)
+    print("Last name (slice)  :", last_name)
+    print("Full upper case    :", full_upper)
+    print("Full lower case    :", full_lower)
+    print("Course (clean)     :", course_clean)
 
 
     print("\n[Info] In this module we used:")
-    print("- Numeric types: int (age), float (marks).")
-    print("- Arithmetic operations: +, /, //, % for calculations.")
+    print("- String indexing: name[0], name[-1].")
+    print("- String slicing: name[:space_index], name[space_index+1:].")
+    print("- String methods: .upper(), .lower(), .strip().")
 
 if __name__ == "__main__":
     main()
