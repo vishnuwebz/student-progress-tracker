@@ -1,53 +1,67 @@
+# Module 6 - Sets and Dictionaries for Student Records
 # Project: Student Progress Tracker
 
 def main():
-    print("==================================")
-    print("Student Progress Tracker (CLI)")
-    print("==================================")
-    print("\n[Module 5] Using lists and tuples for subjects and marks...\n")
+    print("===================================")
+    print("   Student Progress Tracker (CLI)  ")
+    print("===================================")
+    print("\n[Module 6] Using sets and dictionaries for a student record...\n")
 
-    # get basic details
-    full_name = input("Enter full name (e.g., Vishnu G) : ")
+    # --- Basic details ---
+    full_name = input("Enter full name (e.g., Vishnu G): ")
     age = int(input("Enter age: "))
-    course = input("Enter course name (e.g, Python Full Stack) : ")
+    course = input("Enter course name: ")
 
-    # pack some basic info in a tuple(immutable container)
-    student_basic = (full_name, age, course)
+    # --- Unique subjects using a set ---
+    # We start from a list (could have duplicates) then convert to set to ensure uniqueness
+    raw_subjects = ["Maths", "Science", "English", "Maths"]
+    subject_set = set(raw_subjects)  # set removes duplicate "Maths"
 
-    # --- students and marks using a list ---
-    # predefined subjects lists (can be changed later)
-    subjects = ["Maths", "Physics", "Chemistry"]
-    marks = [] # empty list to store marks
+    print("\nSubjects available (unique from set):")
+    for subject in subject_set:
+        print("-", subject)
+
+    # For stable order when asking marks, convert back to a list
+    subjects = list(subject_set)
 
     print("\nEnter marks for each subject (0 to 100):")
+    marks = []
     for subject in subjects:
         mark = float(input(f"{subject} mark: "))
-        marks.append(mark) # list.append() to add elements at end
+        marks.append(mark)
 
-    # calculate total and average using the marks list
     total = sum(marks)
     average = total / len(marks)
 
-    # --- output summary ---
-    print("\n--- Student Summary (lists and tuples)---")
-    print("Student (tuple) :", student_basic)
-    print("Name            :", student_basic[0])
-    print("Age             :", student_basic[1])
-    print("Course          :", student_basic[2])
+    # --- Dictionary for student record ---
+    student = {
+        "name": full_name,
+        "age": age,
+        "course": course,
+        "subjects": subjects,
+        "marks": marks,
+        "total": total,
+        "average": average,
+    }
 
-    print("\nSubjects and Marks:")
-    for index, subject in enumerate(subjects):
-        print(f"{index}. {subject}: {marks[index]}")
+    # --- Output summary ---
+    print("\n--- Student Dictionary Record ---")
+    print("Raw dict :", student)
+    print("\nAccess via keys:")
+    print("Name     :", student["name"])
+    print("Age      :", student["age"])
+    print("Course   :", student["course"])
+    print("Total    :", student["total"])
+    print("Average  :", student["average"])
 
-    print("\nTotal marks :", total)
-    print("Average : ", average)
-
+    print("\nSubjects and Marks from dict:")
+    for i, subject in enumerate(student["subjects"]):
+        print(f"- {subject}: {student['marks'][i]}")
 
     print("\n[Info] In this module we used:")
-    print("- List for multiple marks and subjects.")
-    print("- .append() to add marks to the list.")
-    print("- Tuple to store basic, fixed student info.")
-    print("- Indexing and enumerate() to access list items.")
+    print("- Set to ensure unique subjects (no duplicates).")
+    print("- Dictionary to store a full student record with key-value pairs.")
+    print("- Accessing and printing values via dictionary keys.")
 
 if __name__ == "__main__":
     main()
