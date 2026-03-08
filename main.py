@@ -5,7 +5,7 @@ def main():
     print("===================================")
     print("   Student Progress Tracker (CLI)  ")
     print("===================================")
-    print("\n[Module 6] Using sets and dictionaries for a student record...\n")
+    print("\n[Module 7] Adding grading logic using if / elif / else...\n")
 
     # --- Basic details ---
     full_name = input("Enter full name (e.g., Vishnu G): ")
@@ -33,6 +33,24 @@ def main():
     total = sum(marks)
     average = total / len(marks)
 
+    # --- Grading logic using if / elif / else ---
+    # Example scale (you can tweak later):
+    # 90+  -> A
+    # 75-89 -> B
+    # 60-74 -> C
+    # 40-59 -> D
+    # <40   -> F
+    if average >= 90:
+        grade = "A"
+    elif average >= 75:
+        grade = "B"
+    elif average >= 60:
+        grade = "C"
+    elif average >= 40:
+        grade = "D"
+    else:
+        grade = "F"
+
     # --- Dictionary for student record ---
     student = {
         "name": full_name,
@@ -42,26 +60,25 @@ def main():
         "marks": marks,
         "total": total,
         "average": average,
+        "grade" : grade,
     }
 
     # --- Output summary ---
-    print("\n--- Student Dictionary Record ---")
-    print("Raw dict :", student)
-    print("\nAccess via keys:")
-    print("Name     :", student["name"])
-    print("Age      :", student["age"])
-    print("Course   :", student["course"])
-    print("Total    :", student["total"])
-    print("Average  :", student["average"])
+    print("\n--- Student Record with Grade ---")
+    print("Name    :", student["name"])
+    print("Age     :", student["age"])
+    print("Course  :", student["course"])
+    print("Total   :", student["total"])
+    print("Average :", student["average"])
+    print("Grade   :", student["grade"])
 
     print("\nSubjects and Marks from dict:")
     for i, subject in enumerate(student["subjects"]):
         print(f"- {subject}: {student['marks'][i]}")
 
     print("\n[Info] In this module we used:")
-    print("- Set to ensure unique subjects (no duplicates).")
-    print("- Dictionary to store a full student record with key-value pairs.")
-    print("- Accessing and printing values via dictionary keys.")
+    print("- if / elif / else to convert average marks into grade.")
+    print("- Stored the grade inside the student dictionary as 'grade'.")
 
 if __name__ == "__main__":
     main()
