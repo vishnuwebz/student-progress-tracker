@@ -1,1 +1,1 @@
-vishnu|24|coue|Science,English,Maths|45.0,90.0,78.0|213.0|71.0|71.0|C
+vishnu webz|28|python fsd|Maths,Science,English|98.0,73.0,89.0|260.0|86.66666666666667|86.66666666666667|B

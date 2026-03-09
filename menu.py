@@ -7,7 +7,7 @@ from storage import save_students, load_students # new import
 
 def show_menu():
     """Print main menu options."""
-    print("\n[Module 11] Main Menu")
+    print("\nMain Menu")
     print("1. Add student")
     print("2. List students")
     print("3. Save students to file")

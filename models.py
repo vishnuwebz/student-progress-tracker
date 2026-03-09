@@ -1,5 +1,5 @@
 # models.py
-# Student class and basic OOP
+# Student class and GraduateStudent inheritance
 
 class Student:
     def __init__(self, name, age, course, subjects, marks):
@@ -45,6 +45,10 @@ class Student:
         else:
             return "F"
 
+    def get_type_label(self):
+        """Return a label for display (van be overridden in subclasses)."""
+        return "Student"
+
     def to_dict(self):
         """Convert this Student object to a dict (for storage / printing)."""
         return {
@@ -57,16 +61,46 @@ class Student:
             "average": self.get_average(),
             "percentage": self.get_percentage(),
             "grade": self.get_grade(),
+            "type": self.get_type_label(),
+            "extra": None, # placeholder for subclasses
         }
 
     @staticmethod
     def from_dict(data: dict):
         """Create a Student object from a dict."""
-        return Student(
-            name=data["name"],
-            age=data["age"],
-            course=data["course"],
-            subjects=data["subjects"],
-            marks=data["marks"],
-        )
+        type_value = data.get("type", "Student")
+        if type_value == "Graduate":
+            return GraduateStudent(
+                name=data["name"],
+                age=data["age"],
+                course=data["courses"],
+                subjects=data["subjects"],
+                marks=data["marks"],
+                thesis_title=data.get("extra", "") or "",
+            )
+        else:
+            return Student(
+                name=data["name"],
+                age=data["age"],
+                course=data["course"],
+                subjects=data["subjects"],
+                marks=data["marks"],
+            )
 
+class GraduateStudent(Student):
+    """
+    GraduateStudent inherits from Student and adds a thesis_title.
+    """
+
+    def __init__(self, name, age, course, subjects, marks, thesis_title):
+        super().__init__(name, age, course, subjects, marks)
+        self.thesis_title = thesis_title
+
+    def get_type_label(self):
+        #override to show different type
+        return "Graduate"
+
+    def to_dict(self):
+        base = super().to_dict()
+        base["extra"] = self.thesis_title
+        return base
