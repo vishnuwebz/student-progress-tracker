@@ -1,6 +1,26 @@
 # student_utils.py
 # Student-related functions
 
+
+def safe_int_input(prompt: str) -> int:
+    """Ask for an integer until the user gives a valid one."""
+    while True:
+        value = input(prompt)
+        try:
+            return int(value)
+        except ValueError:
+            print("[Error] Please enter a valid integer.")
+
+
+def safe_float_input(prompt: str) -> float:
+    """Ask for a float until the user gives a valid one."""
+    while True:
+        value = input(prompt)
+        try:
+            return float(value)
+        except ValueError:
+            print("[Error] Please enter a valid number (e.g., 75 or 89.5).")
+
 def calculate_grade(average):
     """Return grade based on average marks."""
     if average >= 90:
@@ -19,7 +39,7 @@ def create_student():
     """Create and return a single student dictionary."""
     print("\n[Add Student]")
     full_name = input("Enter full name: ")
-    age = int(input("Enter age: "))
+    age = safe_int_input("Enter age: ")
     course = input("Enter course name: ")
 
     # Subjects: unique using set, then back to list
@@ -30,7 +50,7 @@ def create_student():
     print("\nEnter marks for each subject (0 to 100):")
     marks = []
     for subject in subjects:
-        mark = float(input(f"{subject} mark: "))
+        mark = safe_float_input(f"{subject} mark: ")
         marks.append(mark)
 
     total = sum(marks)

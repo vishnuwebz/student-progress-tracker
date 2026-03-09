@@ -36,33 +36,41 @@ def line_to_student(line: str) -> dict:
 
     parts = line.strip("|")
     if len(parts) != 9:
+        print("[Warning] Skipping malformed line in data file.")
         return None # malformed line
+    try:
+        name, age_str, course, subjects_str, marks_str, total_str, avg_str, perc_str, grade = parts
 
-    name, age_str, course, subjects_str, marks_str, total_str, avg_str, perc_str, grade = parts
+        subjects = subjects_str.split(",") if subjects_str else []
+        marks = [float(m) for m in marks_str.split(",")] if marks_str else []
 
-    subjects = subjects_str.split(",") if subjects_str else []
-    marks = [float(m) for m in marks_str.split(",")] if marks_str else []
-
-    student = {
-        "name": name,
-        "age": int(age_str),
-        "course": course,
-        "subjects": subjects,
-        "marks": marks,
-        "total": float(total_str),
-        "average": float(avg_str),
-        "percentage": float(perc_str),
-        "grade": grade,
-    }
-    return student
+        student = {
+            "name": name,
+            "age": int(age_str),
+            "course": course,
+            "subjects": subjects,
+            "marks": marks,
+            "total": float(total_str),
+            "average": float(avg_str),
+            "percentage": float(perc_str),
+            "grade": grade,
+        }
+        return student
+    except ValueError:
+        print("[Warning] Could not parse a line due to bad numeric data. Skipping.")
+        return None
 
 def save_students(students: list):
     """Save all students to a text file (overwrite)."""
-    with open(DATA_FILE, "w", encoding="utf-8") as f:
-        for student in students:
-            line = student_to_line(student)
-            f.write(line + "\n")
-    print(f"\n[File] Saved {len(students)} student(s) to '{DATA_FILE}'.")
+    try:
+        with open(DATA_FILE, "w", encoding="utf-8") as f:
+            for student in students:
+                line = student_to_line(student)
+                f.write(line + "\n")
+        print(f"\n[File] Saved {len(students)} student(s) to '{DATA_FILE}'.")
+    except OSError as e:
+        print(f"[Error] Could not write to file '{DATA_FILE}': {e}")
+
 
 def load_students() -> list:
     """Load students from file, if it exists; otherwise return empty list."""
@@ -70,11 +78,18 @@ def load_students() -> list:
         print(f"\n[File] '{DATA_FILE}' not found, starting with empty student list.'")
         return []
     students = []
-    with open(DATA_FILE, "r", encoding="utf-8") as f:
-        for line in f:
-            student = line_to_student(line)
-            if student:
-                students.append(student)
+    try:
+        with open(DATA_FILE, "r", encoding="utf-8") as f:
+            for line in f:
+                student = line_to_student(line)
+                if student:
+                    students.append(student)
 
-    print(f"\n[File] Loaded {len(students)} students(s) from '{DATA_FILE}'.")
+        print(f"\n[File] Loaded {len(students)} students(s) from '{DATA_FILE}'.")
+    except FileNotFoundError:
+        print(f"\n[File] '{DATA_FILE}' was not found (FileNotFoundError). Starting with empty student list.")
+        students = []
+    except OSError as e:
+        print(f"[Error] Problem reading file '{DATA_FILE}': {e}")
+        students = []
     return students
