@@ -1,5 +1,7 @@
 # student_utils.py
-# Student-related functions
+# Student-related functions using Student class
+
+from models import Student
 
 
 def safe_int_input(prompt: str) -> int:
@@ -21,20 +23,6 @@ def safe_float_input(prompt: str) -> float:
         except ValueError:
             print("[Error] Please enter a valid number (e.g., 75 or 89.5).")
 
-def calculate_grade(average):
-    """Return grade based on average marks."""
-    if average >= 90:
-        return "A"
-    elif average >= 75:
-        return "B"
-    elif average >= 60:
-        return "C"
-    elif average >= 40:
-        return "D"
-    else:
-        return "F"
-
-
 def create_student():
     """Create and return a single student dictionary."""
     print("\n[Add Student]")
@@ -53,27 +41,18 @@ def create_student():
         mark = safe_float_input(f"{subject} mark: ")
         marks.append(mark)
 
-    total = sum(marks)
-    average = total / len(marks)
+    # Create Student object
+    student_obj = Student(
+        name=full_name,
+        age=age,
+        course=course,
+        subjects=subjects,
+        marks=marks,
+    )
 
-    # Lambda for percentage
-    max_total = len(marks) * 100
-    percentage = (lambda t, max_t: (t / max_t) * 100)(total, max_total)
-
-    grade = calculate_grade(average)
-
-    student = {
-        "name": full_name,
-        "age": age,
-        "course": course,
-        "subjects": subjects,
-        "marks": marks,
-        "total": total,
-        "average": average,
-        "percentage": percentage,
-        "grade": grade,
-    }
-    return student
+    # Convert object to dict for compatibility with storage/UI
+    student_dict = student_obj.to_dict()
+    return student_dict
 
 
 def add_student(students):
